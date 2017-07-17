@@ -57,6 +57,8 @@ internal class PopUpAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         let fakeSourceView = UIImageView()
         
         if let sourceView = sourceView {
+            whiteBox.layer.cornerRadius = sourceView.layer.cornerRadius
+            whiteBox.clipsToBounds = true
             
             UIGraphicsBeginImageContextWithOptions(sourceView.bounds.size, false, UIScreen.main.scale)
             sourceView.drawHierarchy(in: sourceView.bounds, afterScreenUpdates: true)
@@ -80,6 +82,17 @@ internal class PopUpAnimator: NSObject, UIViewControllerAnimatedTransitioning {
             fromView.transform = originalTransform.scaledBy(x: 0.93, y: 0.93)
             
         }, completion: { finished1 in
+            
+            // Animate cornerRadius
+            if whiteBox.layer.cornerRadius != 0 {
+                let anim = CABasicAnimation(keyPath: "cornerRadius")
+                anim.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
+                anim.fromValue = whiteBox.layer.cornerRadius
+                anim.toValue = 0
+                anim.duration = self.transitionDuration(using: transitionContext)
+                whiteBox.layer.add(anim, forKey: "cornerRadius")
+                whiteBox.layer.cornerRadius = 0
+            }
             
             // White box scale in
             UIView.animate(withDuration: self.transitionDuration(using: transitionContext), animations: {
