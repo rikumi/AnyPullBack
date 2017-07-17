@@ -2,7 +2,7 @@
 
 A simple Navigation Controller, with transitions to push a View Controller with animation, and to enable swipe right/down/up gestures to pop the current View Controller.
 
-Note: Experimental support for `UIScrollView`s (and all other views based on `UIScrollView`, e.g. `UITableView` and `UIWebView`) is provided, which means all the `UIScrollView`s you are touching should be scaled left-/top-/bottom-most to trigger swiping right/down/up gestures. All the touched `UIScrollView`s (except those in the `rootViewController`) will be set `bounces = false` to achieve this.
+Note: Experimental support for `UIScrollView`s (and all other views based on `UIScrollView`, e.g. `UITableView` and `UIWebView`) is provided, which means all the `UIScrollView`s you are touching should be scrolled left-/top-/bottom-most to trigger swiping right/down/up gestures. All the touched `UIScrollView`s (except those in the `rootViewController`) will be set `bounces = false` to achieve this.
 
 Written in Swift 3.
 
