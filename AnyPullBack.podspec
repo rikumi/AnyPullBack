@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "AnyPullBack"
-  s.version      = "1.0.0"
+  s.version      = "v1.0.0"
   s.summary      = "Swipe right/down/up to go back in the simple Navigation Controller"
   s.description  = <<-DESC
   				   
