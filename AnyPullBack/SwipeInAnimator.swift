@@ -1,5 +1,5 @@
 //
-//  SwipeOutAnimator
+//  SwipeInAnimator
 //  AnyPullBack
 //
 //  Created by Vhyme on 2017/7/17.
@@ -8,19 +8,19 @@
 
 import UIKit
 
-public enum SwipeOutDirection {
-    case rightFromLeft
+public enum SwipeInDirection {
     case leftFromRight
-    case downFromTop
+    case rightFromLeft
     case upFromBottom
+    case downFromTop
 }
 
 // Animator for popping view controllers.
-internal class SwipeOutAnimator: NSObject, PopAnimator {
+internal class SwipeInAnimator: NSObject, PushAnimator {
     
-    var direction: SwipeOutDirection
+    var direction: SwipeInDirection
     
-    init (direction: SwipeOutDirection) {
+    init (direction: SwipeInDirection) {
         self.direction = direction
     }
     
@@ -36,48 +36,49 @@ internal class SwipeOutAnimator: NSObject, PopAnimator {
         
         let container = transitionContext.containerView
         
-        // Layer order: Bottom <- [ destination view / mask view / source view ] -> Top
+        // Layer order: Bottom <- [ source view / mask view / destination view ] -> Top
         // source view is initially in container, so add the other 2 views here
         
         // Add mask view
         let maskView = UIView()
         maskView.frame = container.frame
         maskView.backgroundColor = .black
-        maskView.alpha = 0.8
-        container.insertSubview(maskView, belowSubview: sourceView)
-        
-        // Add destination view
-        destinationView.frame = container.frame
-        let originalTransform = destinationView.transform
-        destinationView.transform = originalTransform.scaledBy(x: 0.93, y: 0.93)
-        container.insertSubview(destinationView, belowSubview: maskView)
+        maskView.alpha = 0
+        container.addSubview(maskView)
         
         // Calculate frame
-        var destFrame = sourceView.frame
+        var destFrame = container.bounds
         switch direction {
-        case .rightFromLeft:
-            destFrame = destFrame.offsetBy(dx: destFrame.width, dy: 0)
         case .leftFromRight:
+            destFrame = destFrame.offsetBy(dx: destFrame.width, dy: 0)
+        case .rightFromLeft:
             destFrame = destFrame.offsetBy(dx: -destFrame.width, dy: 0)
-        case .downFromTop:
-            destFrame = destFrame.offsetBy(dx: 0, dy: destFrame.height)
         case .upFromBottom:
+            destFrame = destFrame.offsetBy(dx: 0, dy: destFrame.height)
+        case .downFromTop:
             destFrame = destFrame.offsetBy(dx: 0, dy: -destFrame.height)
         }
+        destinationView.frame = destFrame
         
-        // Mask view fade out / source view slide out / destination view scale in
+        // Add destination view
+        container.addSubview(destinationView)
+        
+        let originalTransform = sourceView.transform
+        
+        // Mask view fade in / source view scale out / destination view slide in
         UIView.animate(withDuration: self.transitionDuration(using: transitionContext), animations: {
             
-            maskView.alpha = 0
-            sourceView.frame = destFrame
-            destinationView.transform = originalTransform
+            maskView.alpha = 1
+            sourceView.transform = sourceView.transform.scaledBy(x: 0.93, y: 0.93)
+            destinationView.frame = container.bounds
             
         }, completion: { _ in
             
             let cancelled = transitionContext.transitionWasCancelled
             
+            sourceView.transform = originalTransform
+            
             if cancelled {
-                destinationView.transform = originalTransform
                 maskView.removeFromSuperview()
                 destinationView.removeFromSuperview()
             }

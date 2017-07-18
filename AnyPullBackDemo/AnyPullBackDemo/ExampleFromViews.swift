@@ -17,14 +17,14 @@ class ExampleFromViewsViewController: UIViewController {
     @IBOutlet weak var view3: UIView!
     
     @IBAction func pushView1() {
-        (navigationController as? AnyPullBackNavigationController)?.pushViewController(UITableViewController(), fromView: view1, animated: true)
+        (navigationController as? AnyPullBackNavigationController)?.pushViewController(UITableViewController(), fromView: view1)
     }
     
     @IBAction func pushView2() {
-        (navigationController as? AnyPullBackNavigationController)?.pushViewController(UITableViewController(), fromView: view2, animated: true)
+        (navigationController as? AnyPullBackNavigationController)?.pushViewController(UITableViewController(), fromView: view2)
     }
     
     @IBAction func pushView3() {
-        (navigationController as? AnyPullBackNavigationController)?.pushViewController(UITableViewController(), fromView: view3, animated: true)
+        (navigationController as? AnyPullBackNavigationController)?.pushViewController(UITableViewController(), fromView: view3)
     }
 }

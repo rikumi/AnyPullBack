@@ -7,18 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D31FCB1B1F1E48C000FD729B /* ExampleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31FCB1A1F1E48C000FD729B /* ExampleTableViewController.swift */; };
+		D31FCB1E1F1E520800FD729B /* SwipeInAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31FCB1C1F1E520800FD729B /* SwipeInAnimator.swift */; };
+		D31FCB1F1F1E520800FD729B /* AnimatorProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31FCB1D1F1E520800FD729B /* AnimatorProtocols.swift */; };
 		D3737A7B1F1CE48D0074E759 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3737A7A1F1CE48D0074E759 /* AppDelegate.swift */; };
 		D3737A801F1CE48D0074E759 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3737A7E1F1CE48D0074E759 /* Main.storyboard */; };
 		D3737A821F1CE48D0074E759 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3737A811F1CE48D0074E759 /* Assets.xcassets */; };
 		D3737A851F1CE48D0074E759 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3737A831F1CE48D0074E759 /* LaunchScreen.storyboard */; };
 		D3737A8F1F1CE4F80074E759 /* SwipeOutAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3737A8C1F1CE4F80074E759 /* SwipeOutAnimator.swift */; };
-		D3737A901F1CE4F80074E759 /* PopUpAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3737A8D1F1CE4F80074E759 /* PopUpAnimator.swift */; };
+		D3737A901F1CE4F80074E759 /* ScaleInAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3737A8D1F1CE4F80074E759 /* ScaleInAnimator.swift */; };
 		D3737A911F1CE4F80074E759 /* AnyPullBackNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3737A8E1F1CE4F80074E759 /* AnyPullBackNavigationController.swift */; };
 		D3737A931F1CE9520074E759 /* ExampleWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3737A921F1CE9520074E759 /* ExampleWebView.swift */; };
 		D376E72D1F1CEE710030B117 /* ExampleFromViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = D376E72C1F1CEE710030B117 /* ExampleFromViews.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D31FCB1A1F1E48C000FD729B /* ExampleTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExampleTableViewController.swift; sourceTree = "<group>"; };
+		D31FCB1C1F1E520800FD729B /* SwipeInAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SwipeInAnimator.swift; path = ../../AnyPullBack/SwipeInAnimator.swift; sourceTree = "<group>"; };
+		D31FCB1D1F1E520800FD729B /* AnimatorProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AnimatorProtocols.swift; path = ../../AnyPullBack/AnimatorProtocols.swift; sourceTree = "<group>"; };
 		D3737A771F1CE48D0074E759 /* AnyPullBackDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AnyPullBackDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3737A7A1F1CE48D0074E759 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D3737A7F1F1CE48D0074E759 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -26,7 +32,7 @@
 		D3737A841F1CE48D0074E759 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D3737A861F1CE48D0074E759 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D3737A8C1F1CE4F80074E759 /* SwipeOutAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SwipeOutAnimator.swift; path = ../../AnyPullBack/SwipeOutAnimator.swift; sourceTree = "<group>"; };
-		D3737A8D1F1CE4F80074E759 /* PopUpAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PopUpAnimator.swift; path = ../../AnyPullBack/PopUpAnimator.swift; sourceTree = "<group>"; };
+		D3737A8D1F1CE4F80074E759 /* ScaleInAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ScaleInAnimator.swift; path = ../../AnyPullBack/ScaleInAnimator.swift; sourceTree = "<group>"; };
 		D3737A8E1F1CE4F80074E759 /* AnyPullBackNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AnyPullBackNavigationController.swift; path = ../../AnyPullBack/AnyPullBackNavigationController.swift; sourceTree = "<group>"; };
 		D3737A921F1CE9520074E759 /* ExampleWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExampleWebView.swift; sourceTree = "<group>"; };
 		D376E72C1F1CEE710030B117 /* ExampleFromViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExampleFromViews.swift; sourceTree = "<group>"; };
@@ -62,12 +68,15 @@
 		D3737A791F1CE48D0074E759 /* AnyPullBackDemo */ = {
 			isa = PBXGroup;
 			children = (
+				D3737A8D1F1CE4F80074E759 /* ScaleInAnimator.swift */,
+				D31FCB1C1F1E520800FD729B /* SwipeInAnimator.swift */,
 				D3737A8C1F1CE4F80074E759 /* SwipeOutAnimator.swift */,
-				D3737A8D1F1CE4F80074E759 /* PopUpAnimator.swift */,
+				D31FCB1D1F1E520800FD729B /* AnimatorProtocols.swift */,
 				D3737A8E1F1CE4F80074E759 /* AnyPullBackNavigationController.swift */,
 				D3737A7A1F1CE48D0074E759 /* AppDelegate.swift */,
 				D3737A921F1CE9520074E759 /* ExampleWebView.swift */,
 				D376E72C1F1CEE710030B117 /* ExampleFromViews.swift */,
+				D31FCB1A1F1E48C000FD729B /* ExampleTableViewController.swift */,
 				D3737A7E1F1CE48D0074E759 /* Main.storyboard */,
 				D3737A811F1CE48D0074E759 /* Assets.xcassets */,
 				D3737A831F1CE48D0074E759 /* LaunchScreen.storyboard */,
@@ -149,10 +158,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D31FCB1E1F1E520800FD729B /* SwipeInAnimator.swift in Sources */,
+				D31FCB1F1F1E520800FD729B /* AnimatorProtocols.swift in Sources */,
 				D3737A8F1F1CE4F80074E759 /* SwipeOutAnimator.swift in Sources */,
-				D3737A901F1CE4F80074E759 /* PopUpAnimator.swift in Sources */,
+				D3737A901F1CE4F80074E759 /* ScaleInAnimator.swift in Sources */,
 				D3737A911F1CE4F80074E759 /* AnyPullBackNavigationController.swift in Sources */,
 				D3737A931F1CE9520074E759 /* ExampleWebView.swift in Sources */,
+				D31FCB1B1F1E48C000FD729B /* ExampleTableViewController.swift in Sources */,
 				D3737A7B1F1CE48D0074E759 /* AppDelegate.swift in Sources */,
 				D376E72D1F1CEE710030B117 /* ExampleFromViews.swift in Sources */,
 			);

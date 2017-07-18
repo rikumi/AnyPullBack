@@ -10,7 +10,11 @@ import UIKit
 
 public class AnyPullBackNavigationController: UINavigationController, UINavigationControllerDelegate, UIViewControllerTransitioningDelegate, UIGestureRecognizerDelegate {
     
-    public var sourceRect = CGRect.zero
+    public var defaultPushAnimator: PushAnimator = ScaleInAnimator(sourceRect: .zero)
+    
+    public var defaultPopAnimator: PopAnimator = SwipeOutAnimator(direction: .downFromTop)
+    
+    private var nextAnimator: UIViewControllerAnimatedTransitioning?
     
     public var pullableWidthFromLeft: CGFloat = 0
     
@@ -20,11 +24,9 @@ public class AnyPullBackNavigationController: UINavigationController, UINavigati
     
     public var canPullFromBottom = true
     
-    private var sourceView: UIView?
-    
     private var dispatchingTo: UIScrollView?
     
-    private var interactiveDirection: SwipeDirection?
+    private var interactiveDirection: SwipeOutDirection?
     
     private var interactionTransition: UIPercentDrivenInteractiveTransition?
     
@@ -41,26 +43,45 @@ public class AnyPullBackNavigationController: UINavigationController, UINavigati
         self.view.addGestureRecognizer(gestureRecognizer)
         
         let frame = view.frame
-        sourceRect = CGRect(x: frame.minX, y: 200, width: frame.width, height: 267)
+        defaultPushAnimator = ScaleInAnimator(sourceRect: CGRect(x: frame.minX, y: 240, width: frame.width, height: frame.height - 480))
     }
     
-    public func pushViewController(_ viewController: UIViewController, fromView: UIView, animated: Bool) {
-        self.sourceView = fromView
+    public func pushViewController(_ viewController: UIViewController, fromView view: UIView) {
+        self.nextAnimator = ScaleInAnimator(sourceRect: view.convert(view.bounds, to: self.view), sourceView: view)
         pushViewController(viewController, animated: true)
+    }
+    
+    public func pushViewController(_ viewController: UIViewController, fromRect rect: CGRect) {
+        self.nextAnimator = ScaleInAnimator(sourceRect: rect, sourceView: nil)
+        pushViewController(viewController, animated: true)
+    }
+    
+    public func pushViewController(_ viewController: UIViewController, inDirection direction: SwipeInDirection) {
+        self.nextAnimator = SwipeInAnimator(direction: direction)
+        pushViewController(viewController, animated: true)
+    }
+    
+    public func popViewController(inDirection direction: SwipeOutDirection) -> UIViewController? {
+        if viewControllers.count <= 1 { return nil }
+        self.nextAnimator = SwipeOutAnimator(direction: direction)
+        return popViewController(animated: true)
     }
     
     public func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         
+        if let animator = nextAnimator {
+            nextAnimator = nil
+            return animator
+        }
+        
         if operation == .push {
-            if let view = sourceView {
-                let animator = PopUpAnimator(sourceRect: view.convert(view.bounds, to: self.view), sourceView: view)
-                sourceView = nil
-                return animator
-            } else {
-                return PopUpAnimator(sourceRect: sourceRect)
-            }
+            return defaultPushAnimator
         } else if operation == .pop {
-            return SwipeOutAnimator(direction: interactiveDirection ?? .downFromTop)
+            if let direction = interactiveDirection {
+                return SwipeOutAnimator(direction: direction)
+            } else {
+                return defaultPopAnimator
+            }
         }
         return nil
     }
@@ -105,6 +126,8 @@ public class AnyPullBackNavigationController: UINavigationController, UINavigati
                             transition.update(max(0, translation.y / view.bounds.height))
                         case .upFromBottom:
                             transition.update(max(0, -translation.y / view.bounds.height))
+                        default:
+                            break
                         }
                     }
                 }
@@ -138,6 +161,8 @@ public class AnyPullBackNavigationController: UINavigationController, UINavigati
                     } else {
                         transition.cancel()
                     }
+                default:
+                    break
                 }
             } else {
                 interactionTransition?.cancel()
@@ -149,21 +174,6 @@ public class AnyPullBackNavigationController: UINavigationController, UINavigati
         default:
             break
         }
-    }
-    
-    public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        
-        if let view = sourceView {
-            let animator = PopUpAnimator(sourceRect: view.convert(view.bounds, to: self.view), sourceView: view)
-            sourceView = nil
-            return animator
-        } else {
-            return PopUpAnimator(sourceRect: sourceRect)
-        }
-    }
-    
-    public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return SwipeOutAnimator(direction: interactiveDirection ?? .downFromTop)
     }
     
     public func navigationController(_ navigationController: UINavigationController, interactionControllerFor animationController: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
@@ -184,7 +194,7 @@ public class AnyPullBackNavigationController: UINavigationController, UINavigati
         return true
     }
     
-    internal func updateDispatch(gesture: UIGestureRecognizer, toView view: UIView, inDirection direction: SwipeDirection) {
+    internal func updateDispatch(gesture: UIGestureRecognizer, toView view: UIView, inDirection direction: SwipeOutDirection) {
         
         if let scrollView = view as? UIScrollView {
             let inset = scrollView.contentInset

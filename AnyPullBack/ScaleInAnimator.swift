@@ -1,5 +1,5 @@
 //
-//  PopUpAnimator.swift
+//  ScaleInAnimator.swift
 //  AnyPullBack
 //
 //  Created by Vhyme on 2017/7/17.
@@ -9,7 +9,7 @@
 import UIKit
 
 // Animator for pushing view controllers.
-internal class PopUpAnimator: NSObject, UIViewControllerAnimatedTransitioning {
+internal class ScaleInAnimator: NSObject, PushAnimator {
     
     var sourceRect: CGRect
     
