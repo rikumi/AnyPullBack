@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "AnyPullBack"
-  s.version      = "1.0.2"
+  s.version      = "1.0.3"
   s.summary      = "Swipe right/down/up to go back in the simple Navigation Controller"
   s.description  = <<-DESC
   				   
@@ -23,5 +23,5 @@ A simple Navigation Controller, with transitions to push a View Controller with 
   s.platform     = :ios, "8.0"
   s.source       = { :git => "https://github.com/vhyme/AnyPullBack.git", :tag => "#{s.version}" }
   s.source_files  = "AnyPullBack/*.{swift}"
-
+  s.frameworks   = "UIKit"
 end
