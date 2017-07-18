@@ -73,26 +73,31 @@ internal class PopUpAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         // Backup the original transform
         let originalTransform = fromView.transform
         
+        // Animate cornerRadius
+        if whiteBox.layer.cornerRadius != 0 {
+            let anim = CABasicAnimation(keyPath: "cornerRadius")
+            anim.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
+            anim.fromValue = whiteBox.layer.cornerRadius
+            anim.toValue = 0
+            anim.duration = self.transitionDuration(using: transitionContext)
+            whiteBox.layer.add(anim, forKey: "cornerRadius")
+            whiteBox.layer.cornerRadius = 0
+        }
+        
         // White box fade in / mask view fade in / from view scale out
         UIView.animate(withDuration: self.transitionDuration(using: transitionContext), animations: {
             
+            let oldWFrame = whiteBox.frame
+            let oldTFrame = toView.frame
+            
             whiteBox.alpha = 1
+            whiteBox.frame = CGRect(x: oldTFrame.minX, y: oldWFrame.minY, width: oldTFrame.width, height: oldWFrame.height)
             maskView.alpha = 0.8
             fakeSourceView.alpha = 0
+            fakeSourceView.frame = fakeSourceView.frame.offsetBy(dx: oldWFrame.minX - oldTFrame.minX, dy: 0)
             fromView.transform = originalTransform.scaledBy(x: 0.93, y: 0.93)
             
         }, completion: { finished1 in
-            
-            // Animate cornerRadius
-            if whiteBox.layer.cornerRadius != 0 {
-                let anim = CABasicAnimation(keyPath: "cornerRadius")
-                anim.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
-                anim.fromValue = whiteBox.layer.cornerRadius
-                anim.toValue = 0
-                anim.duration = self.transitionDuration(using: transitionContext)
-                whiteBox.layer.add(anim, forKey: "cornerRadius")
-                whiteBox.layer.cornerRadius = 0
-            }
             
             // White box scale in
             UIView.animate(withDuration: self.transitionDuration(using: transitionContext), animations: {
