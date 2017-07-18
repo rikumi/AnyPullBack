@@ -8,17 +8,17 @@
 
 import UIKit
 
-class AnyPullBackNavigationController: UINavigationController, UINavigationControllerDelegate, UIViewControllerTransitioningDelegate, UIGestureRecognizerDelegate {
+public class AnyPullBackNavigationController: UINavigationController, UINavigationControllerDelegate, UIViewControllerTransitioningDelegate, UIGestureRecognizerDelegate {
     
-    var sourceRect = CGRect.zero
+    public var sourceRect = CGRect.zero
     
-    var pullableWidthFromLeft: CGFloat = 0
+    public var pullableWidthFromLeft: CGFloat = 0
     
-    var canPullFromLeft = true
+    public var canPullFromLeft = true
     
-    var canPullFromTop = true
+    public var canPullFromTop = true
     
-    var canPullFromBottom = true
+    public var canPullFromBottom = true
     
     private var sourceView: UIView?
     
@@ -30,7 +30,7 @@ class AnyPullBackNavigationController: UINavigationController, UINavigationContr
     
     private var beginPoint: CGPoint?
     
-    internal override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         
         self.delegate = self
@@ -44,12 +44,12 @@ class AnyPullBackNavigationController: UINavigationController, UINavigationContr
         sourceRect = CGRect(x: frame.minX, y: 200, width: frame.width, height: 267)
     }
     
-    func pushViewController(_ viewController: UIViewController, fromView: UIView, animated: Bool) {
+    public func pushViewController(_ viewController: UIViewController, fromView: UIView, animated: Bool) {
         self.sourceView = fromView
         pushViewController(viewController, animated: true)
     }
     
-    internal func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    public func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         
         if operation == .push {
             if let view = sourceView {
@@ -151,7 +151,7 @@ class AnyPullBackNavigationController: UINavigationController, UINavigationContr
         }
     }
     
-    internal func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         
         if let view = sourceView {
             let animator = PopUpAnimator(sourceRect: view.convert(view.bounds, to: self.view), sourceView: view)
@@ -162,15 +162,15 @@ class AnyPullBackNavigationController: UINavigationController, UINavigationContr
         }
     }
     
-    internal func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return SwipeOutAnimator(direction: interactiveDirection ?? .downFromTop)
     }
     
-    internal func navigationController(_ navigationController: UINavigationController, interactionControllerFor animationController: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+    public func navigationController(_ navigationController: UINavigationController, interactionControllerFor animationController: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
         return self.interactionTransition
     }
     
-    internal func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         if viewControllers.count > 1,
             let scrollView = otherGestureRecognizer.view as? UIScrollView {
             
@@ -180,7 +180,7 @@ class AnyPullBackNavigationController: UINavigationController, UINavigationContr
         return false
     }
     
-    internal func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
     
