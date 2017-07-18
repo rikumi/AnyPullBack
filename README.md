@@ -6,27 +6,9 @@ Note: Experimental support for `UIScrollView`s (and all other views based on `UI
 
 Written in Swift 3.
 
-## Screenshots
+## Preview
 
-### With UIView
-
-![](https://ws1.sinaimg.cn/large/006tKfTcly1fhn8vr15z0g30ku1121kx.gif)
-
-### With UIScrollView
-
-![](https://ws4.sinaimg.cn/large/006tKfTcly1fhn8wz0s9pg30ku1127wh.gif)
-
-### With UITableView
-
-![](https://ws1.sinaimg.cn/large/006tKfTcly1fhn8xmalg5g30ku112e82.gif)
-
-### With UIWebView
-
-![](https://ws1.sinaimg.cn/large/006tKfTcly1fhn8ymqnwlg30ku112hdz.gif)
-
-### Custom
-
-![](https://ws2.sinaimg.cn/large/006tKfTcly1fhn8zzu95ig30ku112u0x.gif)
+<video src="https://github.com/vhyme/AnyPullBack/blob/master/preview.mp4"></video>
 
 ## Installation
 
