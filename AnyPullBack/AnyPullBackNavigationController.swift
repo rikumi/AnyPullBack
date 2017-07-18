@@ -214,7 +214,3 @@ public class AnyPullBackNavigationController: UINavigationController, UINavigati
         }
     }
 }
-
-extension AnyPullBackNavigationController: UINavigationControllerDelegate {
-    
-}
