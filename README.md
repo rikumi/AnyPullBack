@@ -8,7 +8,7 @@ Written in Swift 3.
 
 ## Preview
 
-[View video](https://github.com/vhyme/AnyPullBack/blob/master/preview.mp4)
+[View video](https://raw.githubusercontent.com/vhyme/AnyPullBack/master/preview.mp4)
 
 ## Installation
 
