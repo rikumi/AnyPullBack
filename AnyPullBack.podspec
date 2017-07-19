@@ -6,6 +6,7 @@ Pod::Spec.new do |s|
   s.license      = "MIT"
   s.author       = { "Vhyme Riku" => "vhyme@live.cn" }
   s.source       = { :git => "https://github.com/vhyme/AnyPullBack.git", :tag => "#{s.version}" }
+  s.documentation_url = "https://github.com/vhyme/AnyPullBack"
   s.platform     = :ios, "8.0"
   s.source_files = "AnyPullBack"
   s.framework    = "UIKit"
