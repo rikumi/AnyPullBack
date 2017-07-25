@@ -16,19 +16,19 @@ public enum SwipeOutDirection {
 }
 
 // Animator for popping view controllers.
-internal class SwipeOutAnimator: NSObject, PopAnimator {
+public class SwipeOutAnimator: NSObject, PopAnimator {
     
-    var direction: SwipeOutDirection
+    internal var direction: SwipeOutDirection
     
-    init (direction: SwipeOutDirection) {
+    public init (direction: SwipeOutDirection) {
         self.direction = direction
     }
     
-    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
+    public func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return 0.35
     }
     
-    func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+    public func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         guard let sourceVC = transitionContext.viewController(forKey: .from),
             let destinationVC = transitionContext.viewController(forKey: .to),
             let sourceView = sourceVC.view,

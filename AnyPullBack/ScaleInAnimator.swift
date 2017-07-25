@@ -9,22 +9,22 @@
 import UIKit
 
 // Animator for pushing view controllers.
-internal class ScaleInAnimator: NSObject, PushAnimator {
+public class ScaleInAnimator: NSObject, PushAnimator {
     
-    var sourceRect: CGRect
+    internal var sourceRect: CGRect
     
-    var sourceView: UIView?
+    internal var sourceView: UIView?
     
-    init (sourceRect: CGRect, sourceView: UIView? = nil) {
+    public init (sourceRect: CGRect, sourceView: UIView? = nil) {
         self.sourceRect = sourceRect
         self.sourceView = sourceView
     }
     
-    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
+    public func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return 0.35
     }
     
-    func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+    public func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         guard let fromVC = transitionContext.viewController(forKey: .from),
             let toVC = transitionContext.viewController(forKey: .to),
             let fromView = fromVC.view,
