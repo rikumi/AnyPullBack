@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "AnyPullBack"
-  s.version      = "1.1.4"
+  s.version      = "1.1.5"
   s.summary      = "Swipe right/down/up to go back in the simple Navigation Controller"
   s.homepage     = "https://github.com/vhyme/AnyPullBack"
   s.license      = "MIT"

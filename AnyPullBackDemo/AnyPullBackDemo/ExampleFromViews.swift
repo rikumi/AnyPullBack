@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ExampleFromViewsViewController: UIViewController, AnyPullBackCustomizable {
+class ExampleFromViewsViewController: UIViewController {
     
     @IBOutlet weak var view1: UIView!
     
@@ -26,9 +26,5 @@ class ExampleFromViewsViewController: UIViewController, AnyPullBackCustomizable 
     
     @IBAction func pushView3() {
         (navigationController as? AnyPullBackNavigationController)?.pushViewController(UITableViewController(), fromView: view3)
-    }
-    
-    func apb_shouldPull(inDirection direction: SwipeOutDirection) -> Bool {
-        return false
     }
 }
