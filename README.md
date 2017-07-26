@@ -64,9 +64,9 @@ Push a `ViewController` in a specific direction. Available directions are `.left
 
 Pop a `ViewController` in a specific direction. Available directions are `.rightFromLeft`, `.leftFromRight`, `.downFromTop`, `.upFromBottom`.
 
-### extension `UIViewController::apb_shouldPull(inDirection:) -> Bool`
+### protocol `AnyPullBackCustomizable`
 
-Override this method to customize whether you allow the current view controller to be pulled from a specific direction. The method is called when the user tries to pull from a direction. 
+Extend your UIViewController with `AnyPullBackCustomizable` and specify the method `UIViewController::apb_shouldPull(inDirection:) -> Bool` to customize whether you allow the current view controller to be pulled from a specific direction. The method is called when the user tries to pull from a direction. 
 
 > Note: This method can be called multiple times during a single swipe gesture, until it returns `true` to allow the swiping. Please be careful with this detail.
 
