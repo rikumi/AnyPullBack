@@ -1,8 +1,8 @@
 # AnyPullBack
-![](https://img.shields.io/cocoapods/v/AnyPullBack.svg)
-![](https://img.shields.io/cocoapods/p/AnyPullBack.svg)
-![](https://img.shields.io/cocoapods/l/AnyPullBack.svg)
-![](https://img.shields.io/github/stars/vhyme/AnyPullBack.svg?style=social&label=Star)
+[![](https://img.shields.io/cocoapods/v/AnyPullBack.svg)](#)
+[![](https://img.shields.io/cocoapods/p/AnyPullBack.svg)](#)
+[![](https://img.shields.io/cocoapods/l/AnyPullBack.svg)](#)
+[![](https://img.shields.io/github/stars/vhyme/AnyPullBack.svg?style=social&label=Star)](#)
 
 A simple navigation controller with pixel-perfect push animation and pop gesture in any direction you like!
 
