@@ -24,6 +24,10 @@ Add `pod 'AnyPullBack'` to your `Podfile`.
 
 Use `AnyPullBackNavigationController` any way you like.
 
+## Inheritage notice
+
+The class `AnyPullBackNavigationController` is open, which means you can inherit the class and make your own subclasses. However, please make sure to call `super.viewDidLoad()` if your subclass overrides the `viewDidLoad` method, otherwise it will have all the features disabled, working like a pure `UINavigationController`.
+
 ## APIs
 
 - All APIs from UINavigationController are available.
