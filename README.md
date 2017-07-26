@@ -1,12 +1,13 @@
 # AnyPullBack
+🍭 Wow, such a wonderful navigation controller with freestyle! 
 ![](https://img.shields.io/cocoapods/v/AnyPullBack.svg)
 ![](https://img.shields.io/cocoapods/p/AnyPullBack.svg)
 ![](https://img.shields.io/cocoapods/l/AnyPullBack.svg)
 ![](https://img.shields.io/github/stars/vhyme/AnyPullBack.svg?style=social&label=Star)
 
-A simple Navigation Controller, with transitions to push a View Controller with animation, and to enable swipe right/down/up gestures to pop the current View Controller.
+A simple navigation controller with pixel-perfect push animation and pop gesture in any direction you like!
 
-Note: Experimental support for `UIScrollView`s (and all other views based on `UIScrollView`, e.g. `UITableView` and `UIWebView`) is provided, which means all the `UIScrollView`s you are touching should be scrolled left-/top-/bottom-most to trigger swiping right/down/up gestures. All the touched `UIScrollView`s (except those in the `rootViewController`) will be set `bounces = false` to achieve this.
+> Note: Experimental support for `UIScrollView`s (and all other views based on `UIScrollView`, e.g. `UITableView` and `UIWebView`) is provided, which means all the `UIScrollView`s you are touching should be scrolled left-/top-/bottom-most to trigger swiping right/down/up gestures. All the touched `UIScrollView`s (except those in the `rootViewController`) will be set `bounces = false` to achieve this.
 
 Written in Swift 3.
 
