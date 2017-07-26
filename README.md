@@ -85,12 +85,3 @@ class ExampleViewController: UIViewController, AnyPullBackCustomizable {
     }
 }
 ```
-
-<style>
-    h3 code {
-        font-weight: normal;
-        font-size: 90% !important;
-        color: #549c31;
-        background: #f5fdf5 !important;
-    }
-</style>
