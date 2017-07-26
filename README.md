@@ -1,5 +1,4 @@
 # AnyPullBack
-🍭 Wow, such a wonderful navigation controller with freestyle! 
 ![](https://img.shields.io/cocoapods/v/AnyPullBack.svg)
 ![](https://img.shields.io/cocoapods/p/AnyPullBack.svg)
 ![](https://img.shields.io/cocoapods/l/AnyPullBack.svg)
