@@ -66,7 +66,7 @@ public class SwipeOutAnimator: NSObject, PopAnimator {
         }
         
         // Mask view fade out / source view slide out / destination view scale in
-        UIView.animate(withDuration: self.transitionDuration(using: transitionContext), animations: {
+        UIView.animate(withDuration: self.transitionDuration(using: transitionContext), delay: 0, options: .curveLinear, animations: {
             
             maskView.alpha = 0
             sourceView.frame = destFrame

@@ -8,6 +8,10 @@
 
 import UIKit
 
+public protocol AnyPullBackCustomizable {
+    func apb_shouldPull(inDirection direction: SwipeOutDirection) -> Bool
+}
+
 public class AnyPullBackNavigationController: UINavigationController, UINavigationControllerDelegate, UIViewControllerTransitioningDelegate, UIGestureRecognizerDelegate {
     
     public var defaultPushAnimator: PushAnimator = ScaleInAnimator(sourceRect: .zero)
@@ -98,11 +102,23 @@ public class AnyPullBackNavigationController: UINavigationController, UINavigati
                 
                 let pullableWidth = pullableWidthFromLeft
                 
-                if dx > 20 && canPullFromLeft && (pullableWidth <= 0 || beginPoint.x <= pullableWidth) {
+                if dx > 20 &&
+                    canPullFromLeft &&
+                    (pullableWidth <= 0 || beginPoint.x <= pullableWidth) &&
+                    (visibleViewController as? AnyPullBackCustomizable)?.apb_shouldPull(inDirection: .rightFromLeft) ?? true {
+                    
                     interactiveDirection = .rightFromLeft
-                } else if dy > 20 && canPullFromTop {
+                    
+                } else if dy > 20 &&
+                    canPullFromTop &&
+                    (visibleViewController as? AnyPullBackCustomizable)?.apb_shouldPull(inDirection: .downFromTop) ?? true {
+                    
                     interactiveDirection = .downFromTop
-                } else if dy < -20 && canPullFromBottom {
+                    
+                } else if dy < -20 &&
+                    canPullFromBottom &&
+                    (visibleViewController as? AnyPullBackCustomizable)?.apb_shouldPull(inDirection: .upFromBottom) ?? true {
+                    
                     interactiveDirection = .upFromBottom
                 }
                 
@@ -191,7 +207,7 @@ public class AnyPullBackNavigationController: UINavigationController, UINavigati
     }
     
     public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        return true
+        return self.interactiveDirection == nil
     }
     
     internal func updateDispatch(gesture: UIGestureRecognizer, toView view: UIView, inDirection direction: SwipeOutDirection) {
