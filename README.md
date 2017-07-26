@@ -26,45 +26,43 @@ Use `AnyPullBackNavigationController` any way you like.
 
 ## APIs
 
-### All APIs from UINavigationController
+- All APIs from UINavigationController are available.
 
-... are available.
-
-### `defaultPushAnimator`
+- `defaultPushAnimator`
 
 Set the default animator used by `pushViewController(_:animated:)`. Initialize a `ScaleInAnimator` with a source rect or source view, or a `SwipeInAnimator` with any direction you like.
 
-### `defaultPopAnimator`
+- `defaultPopAnimator`
 
 Set the default animator used by `popViewController(animated:)`. Initialize a `SwipeOutAnimator` with a direction you like.
 
-### `pullableWidthFromLeft`: CGFloat
+- `pullableWidthFromLeft`: CGFloat
 
 Default is `0`. Set the width of the region where swiping right is valid for popping the current `ViewController`. To enable swiping-right gesture all over the screen, set it to `0`.
 
-### `canPullFromLeft` | `canPullFromTop` | `canPullFromBottom`
+- `canPullFromLeft` | `canPullFromTop` | `canPullFromBottom`
 
 The main control for the swiping gestures. Default is all `true`.
 
-### `pushViewController(_:fromView:)`
+- `pushViewController(_:fromView:)`
 
 Push a `ViewController` with a temporary `ScaleInAnimator` to provide scale-in animation from a specific view. 
 
 > Note: Compared with `pushViewController(_:fromRect:)`, this method provides smoother transition where the source view fades out rather than being suddenly covered by a white rectangle. 
 
-### `pushViewController(_:fromRect:)`
+- `pushViewController(_:fromRect:)`
 
 Push a `ViewController` with a temporary `ScaleInAnimator` to provide scale-in animation from a specific rect.
 
-### `pushViewController(_:inDirection:)`
+- `pushViewController(_:inDirection:)`
 
 Push a `ViewController` in a specific direction. Available directions are `.leftFromRight`, `.rightFromLeft`, `.upFromBottom`, `.downFromTop`.
 
-### `popViewController(inDirection:)`
+- `popViewController(inDirection:)`
 
 Pop a `ViewController` in a specific direction. Available directions are `.rightFromLeft`, `.leftFromRight`, `.downFromTop`, `.upFromBottom`.
 
-### protocol `AnyPullBackCustomizable`
+- protocol `AnyPullBackCustomizable`
 
 Extend your UIViewController with `AnyPullBackCustomizable` and specify the method `UIViewController::apb_shouldPull(inDirection:) -> Bool` to customize whether you allow the current view controller to be pulled from a specific direction. The method is called when the user tries to pull from a direction. 
 
