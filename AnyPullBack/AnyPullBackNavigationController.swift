@@ -12,7 +12,7 @@ public protocol AnyPullBackCustomizable {
     func apb_shouldPull(inDirection direction: SwipeOutDirection) -> Bool
 }
 
-public class AnyPullBackNavigationController: UINavigationController, UINavigationControllerDelegate, UIViewControllerTransitioningDelegate, UIGestureRecognizerDelegate {
+open class AnyPullBackNavigationController: UINavigationController, UINavigationControllerDelegate, UIViewControllerTransitioningDelegate, UIGestureRecognizerDelegate {
     
     public var defaultPushAnimator: PushAnimator = ScaleInAnimator(sourceRect: .zero)
     
@@ -36,7 +36,7 @@ public class AnyPullBackNavigationController: UINavigationController, UINavigati
     
     private var beginPoint: CGPoint?
     
-    override public func viewDidLoad() {
+    override open func viewDidLoad() {
         super.viewDidLoad()
         
         self.delegate = self
