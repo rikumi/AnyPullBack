@@ -95,8 +95,7 @@ open class AnyPullBackNavigationController: UINavigationController, UINavigation
         case .began:
             beginPoint = gesture.location(in: view)
         case .changed:
-            if let beginPoint = beginPoint {
-                let oldDirection = interactiveDirection
+            if let beginPoint = beginPoint, interactiveDirection == nil {
                 
                 let currentPoint = gesture.location(in: view)
                 let dx = currentPoint.x - beginPoint.x
@@ -107,34 +106,26 @@ open class AnyPullBackNavigationController: UINavigationController, UINavigation
                 if dx > 5 &&
                     canPullFromLeft &&
                     (pullableWidth <= 0 || beginPoint.x <= pullableWidth) &&
-                    (oldDirection == nil || oldDirection == .rightFromLeft) &&
                     (visibleViewController as? AnyPullBackCustomizable)?.apb_shouldPull(inDirection: .rightFromLeft) ?? true {
                     
                     interactiveDirection = .rightFromLeft
                     
                 } else if dy > 5 &&
                     canPullFromTop &&
-                    (oldDirection == nil || oldDirection == .downFromTop || oldDirection == .upFromBottom) &&
                     (visibleViewController as? AnyPullBackCustomizable)?.apb_shouldPull(inDirection: .downFromTop) ?? true {
                     
                     interactiveDirection = .downFromTop
                     
                 } else if dy < -5 &&
                     canPullFromBottom &&
-                    (oldDirection == nil || oldDirection == .downFromTop || oldDirection == .upFromBottom) &&
                     (visibleViewController as? AnyPullBackCustomizable)?.apb_shouldPull(inDirection: .upFromBottom) ?? true {
                     
                     interactiveDirection = .upFromBottom
                 }
                 
-                if oldDirection != nil && interactiveDirection != nil && oldDirection != interactiveDirection {
-                    interactionTransition?.cancel()
-                    interactionTransition = nil
+                if let direction = interactiveDirection {
+                    updateDispatch(gesture: gesture, toView: view, inDirection: direction)
                 }
-            }
-            
-            if let direction = interactiveDirection {
-                updateDispatch(gesture: gesture, toView: view, inDirection: direction)
             }
             
             if dispatchingTo == nil {
@@ -231,8 +222,6 @@ open class AnyPullBackNavigationController: UINavigationController, UINavigation
     }
     
     internal func updateDispatch(gesture: UIGestureRecognizer, toView view: UIView, inDirection direction: SwipeOutDirection) {
-        
-        dispatchingTo = nil
         
         if let scrollView = view as? UIScrollView {
             let inset = scrollView.contentInset
