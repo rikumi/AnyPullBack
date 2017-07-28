@@ -15,6 +15,8 @@ public enum SwipeOutDirection {
     case upFromBottom
 }
 
+public var SwipeOutHintText: String = ""
+
 // Animator for popping view controllers.
 public class SwipeOutAnimator: NSObject, PopAnimator {
     
@@ -46,6 +48,22 @@ public class SwipeOutAnimator: NSObject, PopAnimator {
         maskView.alpha = 0.8
         container.insertSubview(maskView, belowSubview: sourceView)
         
+        // Add hint view only when pulling vertically
+        let hintView = UILabel()
+        if direction == .downFromTop {
+            hintView.frame = CGRect(x: 0, y: 0, width: container.bounds.width, height: 0)
+            maskView.addSubview(hintView)
+        } else if direction == .upFromBottom {
+            hintView.frame = CGRect(x: 0, y: container.bounds.height, width: container.bounds.width, height: 0)
+            maskView.addSubview(hintView)
+        }
+        
+        hintView.textAlignment = .center
+        hintView.textColor = .white
+        hintView.font = UIFont.systemFont(ofSize: 14)
+        hintView.text = SwipeOutHintText
+        hintView.alpha = 0
+        
         // Add destination view
         destinationView.frame = container.frame
         let originalTransform = destinationView.transform
@@ -71,6 +89,8 @@ public class SwipeOutAnimator: NSObject, PopAnimator {
             maskView.alpha = 0
             sourceView.frame = destFrame
             destinationView.transform = originalTransform
+            hintView.frame = container.bounds
+            hintView.alpha = 1
             
         }, completion: { _ in
             

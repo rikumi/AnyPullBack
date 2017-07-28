@@ -20,7 +20,7 @@ open class AnyPullBackNavigationController: UINavigationController, UINavigation
     
     private var nextAnimator: UIViewControllerAnimatedTransitioning?
     
-    public var pullableWidthFromLeft: CGFloat = 0
+    public var pullableWidthFromLeft: CGFloat = 50
     
     public var canPullFromLeft = true
     
@@ -95,36 +95,46 @@ open class AnyPullBackNavigationController: UINavigationController, UINavigation
         case .began:
             beginPoint = gesture.location(in: view)
         case .changed:
-            if interactiveDirection == nil, let beginPoint = beginPoint {
+            if let beginPoint = beginPoint {
+                let oldDirection = interactiveDirection
+                
                 let currentPoint = gesture.location(in: view)
                 let dx = currentPoint.x - beginPoint.x
                 let dy = currentPoint.y - beginPoint.y
                 
                 let pullableWidth = pullableWidthFromLeft
                 
-                if dx > 20 &&
+                if dx > 5 &&
                     canPullFromLeft &&
                     (pullableWidth <= 0 || beginPoint.x <= pullableWidth) &&
+                    (oldDirection == nil || oldDirection == .rightFromLeft) &&
                     (visibleViewController as? AnyPullBackCustomizable)?.apb_shouldPull(inDirection: .rightFromLeft) ?? true {
                     
                     interactiveDirection = .rightFromLeft
                     
-                } else if dy > 20 &&
+                } else if dy > 5 &&
                     canPullFromTop &&
+                    (oldDirection == nil || oldDirection == .downFromTop || oldDirection == .upFromBottom) &&
                     (visibleViewController as? AnyPullBackCustomizable)?.apb_shouldPull(inDirection: .downFromTop) ?? true {
                     
                     interactiveDirection = .downFromTop
                     
-                } else if dy < -20 &&
+                } else if dy < -5 &&
                     canPullFromBottom &&
+                    (oldDirection == nil || oldDirection == .downFromTop || oldDirection == .upFromBottom) &&
                     (visibleViewController as? AnyPullBackCustomizable)?.apb_shouldPull(inDirection: .upFromBottom) ?? true {
                     
                     interactiveDirection = .upFromBottom
                 }
                 
-                if let direction = interactiveDirection {
-                    updateDispatch(gesture: gesture, toView: view, inDirection: direction)
+                if oldDirection != nil && interactiveDirection != nil && oldDirection != interactiveDirection {
+                    interactionTransition?.cancel()
+                    interactionTransition = nil
                 }
+            }
+            
+            if let direction = interactiveDirection {
+                updateDispatch(gesture: gesture, toView: view, inDirection: direction)
             }
             
             if dispatchingTo == nil {
@@ -137,11 +147,11 @@ open class AnyPullBackNavigationController: UINavigationController, UINavigation
                         let translation = gesture.translation(in: view)
                         switch direction {
                         case .rightFromLeft:
-                            transition.update(max(0, translation.x / view.bounds.width))
+                            transition.update(makeLinear(with: translation.x / view.bounds.width))
                         case .downFromTop:
-                            transition.update(max(0, translation.y / view.bounds.height))
+                            transition.update(makeEase(with: translation.y / view.bounds.height) / 2)
                         case .upFromBottom:
-                            transition.update(max(0, -translation.y / view.bounds.height))
+                            transition.update(makeEase(with: -translation.y / view.bounds.height) / 2)
                         default:
                             break
                         }
@@ -155,30 +165,30 @@ open class AnyPullBackNavigationController: UINavigationController, UINavigation
                 
                 let translation = gesture.translation(in: view)
                 let velocity = gesture.velocity(in: view)
+                
+                var remainingDistance: CGFloat = 0
+                var lastVelocity: CGFloat = 1
+                
                 switch direction {
                 case .rightFromLeft:
-                    if translation.x > view.bounds.width / 4 && velocity.x > 0
-                        || velocity.x > view.bounds.width {
-                        transition.finish()
-                    } else {
-                        transition.cancel()
-                    }
+                    remainingDistance = view.bounds.width - translation.x
+                    lastVelocity = velocity.x
                 case .downFromTop:
-                    if translation.y > view.bounds.height / 4 && velocity.y > 0
-                        || velocity.y > view.bounds.height {
-                        transition.finish()
-                    } else {
-                        transition.cancel()
-                    }
+                    remainingDistance = view.bounds.height - translation.y
+                    lastVelocity = velocity.y
                 case .upFromBottom:
-                    if translation.y < -view.bounds.height / 4 && velocity.y < 0
-                        || velocity.y < -view.bounds.height {
-                        transition.finish()
-                    } else {
-                        transition.cancel()
-                    }
+                    remainingDistance = view.bounds.height + translation.y
+                    lastVelocity = -velocity.y
                 default:
                     break
+                }
+                
+                if lastVelocity != 0 && remainingDistance / lastVelocity > 0 && remainingDistance / lastVelocity < 0.2 {
+                    interactionTransition?.completionSpeed = (1 - (interactionTransition?.percentComplete ?? 0)) * 1.5
+                    transition.finish()
+                } else {
+                    interactionTransition?.completionSpeed = (interactionTransition?.percentComplete ?? 1) * 2.5
+                    transition.cancel()
                 }
             } else {
                 interactionTransition?.cancel()
@@ -190,6 +200,16 @@ open class AnyPullBackNavigationController: UINavigationController, UINavigation
         default:
             break
         }
+    }
+    
+    internal func makeLinear(with linear: CGFloat) -> CGFloat {
+        let x = min(1, max(0, linear))
+        return x
+    }
+    
+    internal func makeEase(with linear: CGFloat) -> CGFloat {
+        let x = min(1, max(0, linear))
+        return x - x * x / 2
     }
     
     public func navigationController(_ navigationController: UINavigationController, interactionControllerFor animationController: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
@@ -211,6 +231,8 @@ open class AnyPullBackNavigationController: UINavigationController, UINavigation
     }
     
     internal func updateDispatch(gesture: UIGestureRecognizer, toView view: UIView, inDirection direction: SwipeOutDirection) {
+        
+        dispatchingTo = nil
         
         if let scrollView = view as? UIScrollView {
             let inset = scrollView.contentInset
