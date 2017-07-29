@@ -163,7 +163,7 @@ open class AnyPullBackNavigationController: UINavigationController, UINavigation
                 switch direction {
                 case .rightFromLeft:
                     remainingDistance = view.bounds.width - translation.x
-                    lastVelocity = velocity.x
+                    lastVelocity = velocity.x + 200
                 case .downFromTop:
                     remainingDistance = view.bounds.height - translation.y
                     lastVelocity = velocity.y
@@ -174,8 +174,8 @@ open class AnyPullBackNavigationController: UINavigationController, UINavigation
                     break
                 }
                 
-                if lastVelocity != 0 && remainingDistance / lastVelocity > 0 && remainingDistance / lastVelocity < 0.2 {
-                    interactionTransition?.completionSpeed = (1 - (interactionTransition?.percentComplete ?? 0)) * 1.5
+                if lastVelocity != 0 && remainingDistance / lastVelocity > 0 && remainingDistance / lastVelocity < 0.3 {
+                    interactionTransition?.completionSpeed = 1
                     transition.finish()
                 } else {
                     interactionTransition?.completionSpeed = (interactionTransition?.percentComplete ?? 1) * 2.5
