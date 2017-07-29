@@ -154,31 +154,27 @@ open class AnyPullBackNavigationController: UINavigationController, UINavigation
                 let direction = interactiveDirection,
                 let transition = interactionTransition {
                 
-                let translation = gesture.translation(in: view)
+                // let translation = gesture.translation(in: view)
                 let velocity = gesture.velocity(in: view)
                 
-                var remainingDistance: CGFloat = 0
-                var lastVelocity: CGFloat = 1
+                var velocityPercent: CGFloat = 1
                 
                 switch direction {
                 case .rightFromLeft:
-                    remainingDistance = view.bounds.width - translation.x
-                    lastVelocity = velocity.x + 200
+                    velocityPercent = velocity.x / view.bounds.width
                 case .downFromTop:
-                    remainingDistance = view.bounds.height - translation.y
-                    lastVelocity = velocity.y
+                    velocityPercent = velocity.y / view.bounds.height
                 case .upFromBottom:
-                    remainingDistance = view.bounds.height + translation.y
-                    lastVelocity = -velocity.y
+                    velocityPercent = -velocity.y / view.bounds.height
                 default:
                     break
                 }
                 
-                if lastVelocity != 0 && remainingDistance / lastVelocity > 0 && remainingDistance / lastVelocity < 0.3 {
-                    interactionTransition?.completionSpeed = 1
+                if transition.percentComplete > 0.2 || velocityPercent > 2 {
+                    transition.completionSpeed = 1
                     transition.finish()
                 } else {
-                    interactionTransition?.completionSpeed = (interactionTransition?.percentComplete ?? 1) * 2.5
+                    transition.completionSpeed = transition.percentComplete * 2.5
                     transition.cancel()
                 }
             } else {
